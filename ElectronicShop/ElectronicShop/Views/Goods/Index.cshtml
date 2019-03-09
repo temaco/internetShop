@@ -1,0 +1,72 @@
+﻿@model List<GoodModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<style>
+
+    .edit-btn {
+        background-color: limegreen;
+        color: white;
+        padding: 10 15 10 15;
+        border-radius: 5;
+        border: none;
+    }
+
+    .tile {
+        position: relative;
+    }
+
+        .tile > span {
+            position: absolute;
+            right: 10px;
+            top: 0;
+            font-weight: bold;
+        }
+
+            .tile > span:hover {
+                opacity: 0.5;
+            }
+
+    .edit-btn:hover {
+        opacity: 0.5;
+    }
+</style>
+
+<div class="shop">
+
+    @foreach (var good in Model)
+    {
+        @using (Html.BeginForm("GoodEdit", "Goods", new { id = good.ActualID }, FormMethod.Post, null, null))
+        {
+            <div class="tile">
+                <div class="tile-image"><img style="width:100%" src="~/@good.ImagePath.Replace("\\", "/")" /></div>
+                <div class="tile-author">@good.Name</div>
+                <div class="tile-name">@good.Creator</div>
+                <div class="tile-price">@good.Price</div>
+                <input type="submit" class="edit-btn" value="Edit" />
+                <span id="@good.ActualID" class="delete">X</span>
+            </div>
+        }
+        @using (Html.BeginForm("DeleteGood", "Goods", new { id = good.ActualID }, FormMethod.Post, null, new { id = $"{good.ActualID}delete" }))
+        {
+        }
+    }
+
+</div>
+
+@Html.ActionLink("Add new", "GoodNew", "Goods")
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+
+    $(function () {
+        $(".delete").click(function () {
+            $("#" + $(this).attr("id") + "delete").submit();
+        });
+    });
+
+</script>

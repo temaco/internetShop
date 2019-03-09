@@ -1,0 +1,47 @@
+﻿@model List<UserModel>
+@{
+    ViewData["Title"] = "UserChangeType";
+}
+
+<h2>UserChangeType</h2>
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    td {
+        border: 1px solid grey;
+        padding: 10px 15px 10px 15px;
+        text-align: center;
+    }
+
+    .hide {
+        /*border: none;*/
+    }
+</style>
+
+<table>
+
+    <tr style="font-weight:bold">
+        <td>Login</td>
+        <td class="hide"></td>
+        <td class="hide"></td>
+    </tr>
+
+    @foreach (var user in Model)
+    {
+        @using (Html.BeginForm("ChangeType", "Admin", FormMethod.Post))
+        {
+            <tr>
+                <td>@user.Login</td>
+                <td><select asp-for="@(user.UserType)" id="UserType" name="UserType" class="form-control" asp-items="@Html.GetEnumSelectList<UserType>()"></select></td>
+                <td>
+                    <input type="hidden" name="ID" id="ID" value="@user.ActualID" />
+                    <input type="submit" value="Save" />
+                </td>
+            </tr>
+        }
+    }
+
+</table>

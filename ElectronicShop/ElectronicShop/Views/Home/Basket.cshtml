@@ -1,0 +1,55 @@
+﻿@model List<BasketModel>
+@{
+    ViewData["Title"] = "Basket";
+}
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    td {
+        border: 1px solid grey;
+        text-align: center;
+    }
+
+    hide {
+        border: none;
+    }
+</style>
+
+<h2>Basket</h2>
+
+<table>
+    <tr style="font-weight:bold">
+        <td>Good</td>
+        <td>Provider</td>
+        <td>Price</td>
+        <td>Count</td>
+        <td>Sum</td>
+        <td class="hide"></td>
+    </tr>
+    @foreach (var record in Model)
+    {
+        <tr>
+            <td>@record.GoodModel.Name</td>
+            <td>@record.GoodModel.Creator</td>
+            <td>@record.GoodModel.Price</td>
+            <td>@record.Count</td>
+            <td>@(record.Count * record.GoodModel.Price)</td>
+            <td class="hide">@Html.ActionLink("Delete", "Delete", "Basket", new { id = record.ActualID })</td>
+        </tr>
+    }
+
+</table>
+<br>
+
+@Html.Label("Accumulate"):
+@Model.Sum(x => x.GoodModel.Price * x.Count).ToString()
+<br>
+
+
+@if (Model.Count > 0)
+{
+    @Html.ActionLink("Pay", "Transaction", "Transaction")
+}

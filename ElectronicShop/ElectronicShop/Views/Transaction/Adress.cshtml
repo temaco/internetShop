@@ -1,0 +1,53 @@
+﻿@model AdressModel
+@{
+    ViewData["Title"] = "Adress";
+    Layout = null;
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/unlayout.css" />
+</head>
+
+
+<body>
+
+    <h2>Adress</h2>
+
+    @using (Html.BeginForm("Adress", "Transaction", FormMethod.Post))
+    {
+        @Html.HiddenFor(x => x.Transaction)
+
+        <div class="label">
+            @Html.LabelFor(x => x.City)
+        </div>
+        <div class="input">
+            @Html.TextBoxFor(x => x.City)
+        </div>
+
+        <div class="label">
+            @Html.LabelFor(x => x.Street)
+        </div>
+        <div class="input">
+            @Html.TextBoxFor(x => x.Street)
+        </div>
+
+        <div class="label">
+            @Html.LabelFor(x => x.House)
+        </div>
+        <div class="input">
+            @Html.TextBoxFor(x => x.House, new { @type = "number" })
+        </div>
+
+        <div class="label">
+            @Html.LabelFor(x => x.Apartement)
+        </div>
+        <div class="input">
+            @Html.TextBoxFor(x => x.Apartement, new { @type = "number" })
+        </div>
+
+        <input class="btn" type="submit" value="Pay" />
+    }
+
+</body>
+
+

@@ -1,0 +1,52 @@
+﻿@model List<GoodModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="shop">
+    @{
+        string userRoleClaim = string.Empty;
+        if (User.Identity.IsAuthenticated)
+        {
+            userRoleClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Role).Value;
+        }
+        UserType userRole = UserType.Default;
+        if (!string.IsNullOrEmpty(userRoleClaim))
+        {
+            userRole = (UserType)Enum.Parse(typeof(UserType), userRoleClaim);
+        }
+        foreach (var good in Model)
+        {
+            @using (Html.BeginForm("AddToBasket", "Home", new { id = good.ActualID }))
+            {
+                <div class="tile" id="@good.ActualID">
+                    <div class="tile-image"><img style="width:100%" src="~/@good.ImagePath.Replace("\\", "/")" /></div>
+                    <div class="tile-author">@good.Name</div>
+                    <div class="tile-name">@good.Creator</div>
+                    <div class="tile-price">@good.Price</div>
+                    @if (userRole == UserType.User)
+                    {
+                        <input class="tile-count" name="count" id="count" type="number" />
+                        <input type="submit" value="Add to Basket" />
+                    }
+                </div>
+            }
+            @using (Html.BeginForm("GoodOpen", "Home", new { id = good.ActualID }, FormMethod.Post, null, new { id = $"{good.ActualID}open" }))
+            {
+            }
+        }
+    }
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+
+    $(function () {
+        $(".tile").dblclick(function () {
+            $("#" + $(this).attr("id") + "open").submit();
+        });
+    });
+
+</script>

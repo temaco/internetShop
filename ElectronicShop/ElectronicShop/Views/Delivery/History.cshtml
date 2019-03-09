@@ -1,0 +1,40 @@
+﻿@model List<TransactionModel>
+@{
+    ViewData["Title"] = "History";
+}
+
+<h2>History</h2>
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    td {
+        border: 1px solid grey;
+        text-align: center;
+    }
+
+    hide {
+        border: none;
+    }
+</style>
+
+<table>
+    <tr style="font-weight:bold">
+        <td>Goods</td>
+        <td>Adress</td>
+        <td>Price</td>
+        <td>Is User Success</td>
+    </tr>
+    @foreach (var record in Model)
+    {
+        <tr>
+            <td>@string.Join(", ", record.GoodModels.Select(x => x.Name).ToArray())</td>
+            <td>@record.Adress</td>
+            <td>@record.GoodModels.Sum(x => x.Count * x.Price)</td>
+            <td>@record.IsUserDelivery</td>
+        </tr>
+    }
+
+</table>

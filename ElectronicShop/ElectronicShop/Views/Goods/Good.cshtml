@@ -1,0 +1,32 @@
+﻿@model GoodWorker
+@{
+    ViewData["Title"] = "Good";
+}
+
+<h2>Good</h2>
+
+@using (Html.BeginForm("Good", "Goods", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.Action)
+    @Html.HiddenFor(x => x.GoodModel.ActualID)
+    @Html.HiddenFor(x => x.GoodModel.CreatorID)
+
+    @Html.LabelFor(x => x.GoodModel.Name)
+    @Html.TextBoxFor(x => x.GoodModel.Name)
+
+    <br>
+    @Html.LabelFor(x => x.GoodModel.Price)
+    @Html.TextBoxFor(x => x.GoodModel.Price)
+    <br>
+
+    <input type="file" id="files" name="files" />
+
+    @if (!string.IsNullOrEmpty(Model.GoodModel.ImagePath))
+    {
+        <div style="width: 300px">
+            <img style="width:100%" src="~/@Model.GoodModel.ImagePath.Replace("\\", "/")" />
+        </div>
+    }
+
+    <input type="submit" value="@Model.Action" />
+}

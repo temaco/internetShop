@@ -1,0 +1,41 @@
+﻿@model LoginInputModels
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+
+<head>
+    <link rel="stylesheet" href="~/css/unlayout.css" />
+</head>
+
+
+<body>
+
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        <h2>Login</h2>
+
+
+        <div class="label">
+            @Html.LabelFor(x => x.Login)
+        </div>
+        <div class="input">
+            @Html.TextBoxFor(x => x.Login)
+            @Html.ValidationMessageFor(x => x.Login)
+        </div>
+        <div class="label">
+            @Html.LabelFor(x => x.Password)
+        </div>
+        <div class="input">
+            @Html.PasswordFor(x => x.Password)
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>
+
+        <input class="btn btn-success" type="submit" value="Login" />
+
+
+        @Html.ActionLink("Register", "Register", "Account", new { }, new { @class = "btn" })
+    }
+
+</body>

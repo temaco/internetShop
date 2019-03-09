@@ -1,0 +1,54 @@
+﻿@model TransactionInformation
+@{
+    ViewData["Title"] = "Transaction";
+    Layout = null;
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/unlayout.css" />
+</head>
+
+<body>
+
+    <h2>Transaction</h2>
+
+    @using (Html.BeginForm("Transaction", "Transaction", FormMethod.Post))
+    {
+        @Html.HiddenFor(x=>x.TransactionID)
+        @Html.HiddenFor(x=>x.UserID)
+
+        <div class="label">
+            @Html.LabelFor(x => x.Card)
+        </div>
+        <div class="input">
+            @Html.TextBoxFor(x => x.Card)
+        </div>
+
+        <div class="label">
+            @Html.LabelFor(x => x.CardDateTime)
+        </div>
+        <div class="input">
+            @Html.TextBoxFor(x => x.CardDateTime, new { @type = "dateTime" })
+        </div>
+
+        <div class="label">
+            @Html.LabelFor(x => x.CardSecurity)
+        </div>
+        <div class="input">
+            @Html.TextBoxFor(x => x.CardSecurity, new { @type = "number" })
+        </div>
+
+        <div class="label">
+            @Html.LabelFor(x => x.Name)
+        </div>
+        <div class="input">
+            @Html.TextBoxFor(x => x.Name)
+        </div>
+
+        <input class="btn" type="submit" value="Pay" />
+    }
+
+</body>
+
+
+

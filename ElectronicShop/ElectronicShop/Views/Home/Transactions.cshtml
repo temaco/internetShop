@@ -1,0 +1,51 @@
+﻿@model List<TransactionModel>
+@{
+    ViewData["Title"] = "ActiveTransactions";
+}
+
+<h2>ActiveTransactions</h2>
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    td {
+        border: 1px solid grey;
+        text-align: center;
+    }
+
+    hide {
+        border: none;
+    }
+</style>
+
+<table>
+    <tr style="font-weight:bold">
+        <td>Time</td>
+        <td>Is Cancel</td>
+        <td>Is Delivery</td>
+        <td class="hide"></td>
+        <td class="hide"></td>
+    </tr>
+    @foreach (var record in Model)
+    {
+        <tr>
+            <td>@record.TimeDelivery</td>
+            <td>@record.IsCancel</td>
+            <td>@record.IsDeliver</td>
+            @if (!record.IsCancel && !record.IsDeliver)
+            {
+                <td>@Html.ActionLink("Cancel", "CancelTransaction", "Home", new { id = record.ActualID })</td>
+            }
+            @if (record.IsDeliver && !record.IsUserDelivery.HasValue)
+            {
+                <td>
+                    @Html.ActionLink("Delivery Success", "Delivery", "Home", new { id = record.ActualID, success = true })
+                    @Html.ActionLink("Not Delivery", "Delivery", "Home", new { id = record.ActualID, success = false })
+                </td>
+            }
+        </tr>
+    }
+
+</table>
